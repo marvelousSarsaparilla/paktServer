@@ -7,16 +7,20 @@ module.exports = {
     var paktId = req.params.paktId;
     var path = req.body.data.path;
 
-    // update picToday to be true and store picture info in db
+    // update picToday to be true
     PaktUserQuery.uploadedPictureToday(userId, paktId)
-    .then(function () {
-      PictureQuery.postPicture(userId, paktId, path)
-      .then(function (picture) {
-        res.send(picture);
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
+    .catch(function (error) {
+      console.error(error);
+    });
+    // increment pic counter for the week
+    PaktUserQuery.incrementPicsThisWeek(userId, paktId)
+    .catch(function (error) {
+      console.error(error);
+    });
+    // store picture info in db
+    PictureQuery.postPicture(userId, paktId, path)
+    .then(function (picture) {
+      res.send(picture);
     })
     .catch(function (error) {
       console.error(error);
