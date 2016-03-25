@@ -10,14 +10,17 @@ module.exports = {
   },
   postPakt: function (req, res) {
     var data = req.body.data;
-    var userId = parseInt(req.params.userId);
-    data.pakt.users.push(userId);
+    var userId = parseInt(req.params.userId, 10);
     var pairs = [];
     var i;
+
     PaktQuery.createPakt(data.pakt, function (newPakt) {
       var paktId = newPakt.id;
-      // this should include the creator of the pakt
       var users = data.pakt.users;
+
+      // add creator of the pakt and mark as accepted
+      pairs.push({ PaktId: paktId, UserId: userId, accepted: true });
+
       for (i = 0; i < users.length; i++) {
         pairs.push({ PaktId: paktId, UserId: users[i] });
       }
