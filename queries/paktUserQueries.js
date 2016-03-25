@@ -68,5 +68,15 @@ module.exports = {
         PaktId: paktId
       }
     });
+  },
+
+  uploadedPictureToday: function (userId, paktId) {
+    return PaktUser.update({ picToday: true }, {
+      where: {
+        PaktId: paktId,
+        UserId: userId
+      }
+    });
   }
 };
+
