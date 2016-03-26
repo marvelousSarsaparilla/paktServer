@@ -1,4 +1,4 @@
-var UserQuery = require('../queries/UserQueries');
+var UserQuery = require('../queries/userQueries');
 
 module.exports = {
 
