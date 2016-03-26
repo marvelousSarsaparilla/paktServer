@@ -1,4 +1,3 @@
-var UserPakts = require('../utils/db.js').Pakt_User;
 var User = require('../utils/db.js').User;
 var Pakt = require('../utils/db.js').Pakt;
 var Picture = require('../utils/db.js').Picture;
@@ -9,16 +8,16 @@ module.exports = {
     return sequelize.query(q + paktId);
   },
   getPakts: function (userId, callback) {
-    Pakt.findAll({
+    User.findOne({
+      where: { id: userId },
       include: [{
-        model: User,
-        where: { id: userId }
-      },
-      {
-        model: Picture
-      },
-      {
-        model: UserPakts
+        model: Pakt,
+        include: [{
+          model: User
+        },
+        {
+          model: Picture
+        }]
       }]
     })
     .then(function (pakts) {
