@@ -2,7 +2,12 @@ var UserPakts = require('../utils/db.js').Pakt_User;
 var User = require('../utils/db.js').User;
 var Pakt = require('../utils/db.js').Pakt;
 var Picture = require('../utils/db.js').Picture;
+var sequelize = require('../utils/db.js').sequelize;
 module.exports = {
+  setPaktEndDate: function (paktId) {
+    var q = 'UPDATE Pakts SET endDate = DATE_ADD(createdAt, INTERVAL timeFrame WEEK) WHERE id = ';
+    return sequelize.query(q + paktId);
+  },
   getPakts: function (userId, callback) {
     Pakt.findAll({
       include: [{

@@ -25,7 +25,10 @@ module.exports = {
         pairs.push({ PaktId: paktId, UserId: users[i] });
       }
       PaktUserQuery.addFriendsToPakt(pairs, function () {
-        res.send(newPakt);
+        PaktQuery.setPaktEndDate(paktId)
+        .then(function () {
+          res.send(newPakt);
+        });
       });
     });
   }

@@ -68,5 +68,22 @@ module.exports = {
         PaktId: paktId
       }
     });
+  },
+
+  uploadedPictureToday: function (userId, paktId) {
+    return PaktUser.update({ picToday: true }, {
+      where: {
+        PaktId: paktId,
+        UserId: userId
+      }
+    });
+  },
+  incrementPicsThisWeek: function (userId, paktId) {
+    return PaktUser.findOne({ where: { UserId: userId, PaktId: paktId } })
+    .then(function (paktUser) {
+      return PaktUser.update({ picsThisWeek: paktUser.picsThisWeek + 1 },
+        { where: { UserId: userId, PaktId: paktId } });
+    });
   }
 };
+
