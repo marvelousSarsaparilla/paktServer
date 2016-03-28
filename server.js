@@ -2,6 +2,8 @@ var express = require('express');
 var app = express();
 var db = require('./utils/db.js');
 var http = require('http');
+// starts the cron job
+require('./utils/cronJob');
 
 require('./utils/middleware.js')(app);
 require('./utils/routes.js')(app);
