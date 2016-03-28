@@ -9,7 +9,7 @@ var lostRepeatingPakt = function () {
   'SET pu.win = false ',
   'WHERE p.repeating = true ' +
     'AND p.open = true ' +
-    'AND pu.win = NULL ' +
+    'AND pu.win is NULL ' +
     'AND ((p.frequency - pu.picsThisWeek) > ((6 - DAYOFWEEK(NOW()) + ' +
     'DAYOFWEEK(p.createdAt)) % 7))', { type: sequelize.QueryTypes.UPDATE });
 };
@@ -22,7 +22,7 @@ var lostSinglePakt = function () {
     'SET pu.win = false ' +
     'WHERE p.repeating = false ' +
       'AND p.open = true ' +
-      'AND pu.win = NULL ' +
+      'AND pu.win is NULL ' +
       'AND pu.picToday = false ' +
       'AND DATE(endDate) = CURDATE()', { type: sequelize.QueryTypes.UPDATE });
 };
@@ -45,7 +45,7 @@ var resetPicsThisWeek = function () {
     'SET pu.picsThisWeek = 0 ' +
     'WHERE p.repeating = true ' +
       'AND p.open = true ' +
-      'AND pu.win = NULL ' +
+      'AND pu.win is NULL ' +
       'AND DAYOFWEEK(NOW()) = DAYOFWEEK(p.createdAt)', { type: sequelize.QueryTypes.UPDATE });
 };
 
