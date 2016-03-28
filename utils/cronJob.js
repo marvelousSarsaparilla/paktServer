@@ -3,20 +3,20 @@ var CronJob = require('cron').CronJob;
 
 // REPEATING EVENT; decide if lost
 var lostRepeatingPakt = function () {
-  sequelize.query(
+  return sequelize.query(
     'UPDATE pakt_users pu ' +
-  'JOIN pakts p ' +
-    'ON pu.PaktId = p.id ' +
-  'SET pu.win = false ',
-  'WHERE p.repeating = true ' +
-    'AND p.open = true ' +
-    'AND pu.win is NULL ' +
-    'AND ((p.frequency - pu.picsThisWeek) > ((6 - DAYOFWEEK(NOW()) + ' +
-    'DAYOFWEEK(p.createdAt)) % 7))', { type: sequelize.QueryTypes.UPDATE });
+    'JOIN pakts p ' +
+      'ON pu.PaktId = p.id ' +
+    'SET pu.win = false ',
+    'WHERE p.repeating = true ' +
+      'AND p.open = true ' +
+      'AND pu.win is NULL ' +
+      'AND ((p.frequency - pu.picsThisWeek) > ((7 - DAYOFWEEK(NOW()) + ' +
+      'DAYOFWEEK(p.createdAt)) % 7))', { type: sequelize.QueryTypes.UPDATE });
 };
 // decide if single day pakt is lost
 var lostSinglePakt = function () {
-  sequelize.query(
+  return sequelize.query(
     'UPDATE pakt_users pu ' +
     'JOIN pakts p ' +
       'ON pu.PaktId = p.id ' +
@@ -29,7 +29,7 @@ var lostSinglePakt = function () {
 };
 // close pakt on last day
 var closePakt = function () {
-  sequelize.query(
+  return sequelize.query(
     'UPDATE pakt_users pu ' +
     'JOIN pakts p ' +
       'ON pu.PaktId = p.id ' +
@@ -39,7 +39,7 @@ var closePakt = function () {
 };
 // reset pic count on last day of week
 var resetPicsThisWeek = function () {
-  sequelize.query(
+  return sequelize.query(
     'UPDATE pakt_users pu ' +
     'JOIN pakts p ' +
       'ON pu.PaktId = p.id ' +
@@ -52,7 +52,7 @@ var resetPicsThisWeek = function () {
 
 // reset pic upload at end of day
 var resetPicToday = function () {
-  sequelize.query(
+  return sequelize.query(
     'UPDATE pakt_users pu ' +
     'JOIN pakts p ' +
       'ON pu.PaktId = p.id ' +
@@ -61,16 +61,25 @@ var resetPicToday = function () {
      'AND p.open = true', { type: sequelize.QueryTypes.UPDATE });
 };
 
-var job = new CronJob('00 50 23 * * *', function () {
+var job = new CronJob('00 01 00 * * *', function () {
   /*
    * Runs everyday
-   * at 11:50:00 PM.
+   * at 12:01:00 AM.
    */
-  lostRepeatingPakt();
-  lostSinglePakt();
-  closePakt();
-  resetPicsThisWeek();
-  resetPicToday();
+  lostRepeatingPakt()
+  .then(function() {
+    lostSinglePakt()
+  })
+  .then(function() {
+    closePakt()
+  })
+  .then(function() {
+    resetPicsThisWeek()
+  })
+  .then(function() {
+    resetPicToday()
+  })
+  
 }, function () {
   /* This function is executed when the job stops */
   console.log('done with checking');
