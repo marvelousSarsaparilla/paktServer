@@ -3,7 +3,8 @@ var CronJob = require('cron').CronJob;
 
 // REPEATING EVENT; decide if lost
 var lostRepeatingPakt = function () {
-  sequelize.query('UPDATE pakt_users pu ' +
+  sequelize.query(
+    'UPDATE pakt_users pu ' +
   'JOIN pakts p ' +
     'ON pu.PaktId = p.id ' +
   'SET pu.win = false ',
