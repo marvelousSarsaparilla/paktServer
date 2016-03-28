@@ -1,4 +1,5 @@
 var PaktUser = require('../utils/db.js').Pakt_User;
+var sequelize = require('../utils/db.js').sequelize;
 
 module.exports = {
 
@@ -84,6 +85,39 @@ module.exports = {
       return PaktUser.update({ picsThisWeek: paktUser.picsThisWeek + 1 },
         { where: { UserId: userId, PaktId: paktId } });
     });
+  },
+  checkIfPaktRepeating: function (paktId) {
+    return sequelize.query('SELECT repeating FROM pakts WHERE id = ?',
+      { replacements: [paktId], type: sequelize.QueryTypes.SELECT })
+    .then(function (pakt) {
+      return pakt[0].repeating;
+    });
+  },
+  winSingleEvent: function (userId, paktId) {
+    return sequelize.query('UPDATE pakt_users pu ' +
+      'JOIN pakts p ' +
+        'ON pu.PaktId = p.id ' +
+      'SET pu.win = true ' +
+      'WHERE pu.PaktId = ? ' +
+        'AND pu.UserId = ? ' +
+        'AND p.repeating = false ' +
+        'AND p.open = true ' +
+        'AND pu.win is NULL',
+      { replacements: [paktId, userId], type: sequelize.QueryTypes.UPDATE });
+  },
+  winRepeatingEvent: function (userId, paktId) {
+    return sequelize.query('UPDATE pakt_users pu ' +
+      'JOIN pakts p ' +
+        'ON pu.PaktId = p.id ' +
+      'SET pu.win = true ' +
+      'WHERE pu.PaktId = ? ' +
+        'AND pu.UserId =  ? ' +
+        'AND p.repeating = true ' +
+        'AND p.open = true ' +
+        'AND pu.win is NULL ' +
+        'AND pu.picsThisWeek >= p.frequency ' +
+        'AND DATEDIFF(p.endDate, CURDATE()) <= 7',
+      { replacements: [paktId, userId], type: sequelize.QueryTypes.UPDATE });
   }
 };
 
