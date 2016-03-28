@@ -1,4 +1,5 @@
 var sequelize = require('./db.js').sequelize;
+var CronJob = require('cron').CronJob;
 
 // REPEATING EVENT; decide if lost
 var lostRepeatingPakt = function () {
@@ -59,9 +60,22 @@ var resetPicToday = function () {
      'AND p.open = true', { type: sequelize.QueryTypes.UPDATE });
 };
 
-lostRepeatingPakt();
-lostSinglePakt();
-closePakt();
-resetPicsThisWeek();
-resetPicToday();
+var job = new CronJob('00 50 23 * * *', function () {
+  /*
+   * Runs everyday
+   * at 11:50:00 PM.
+   */
+  lostRepeatingPakt();
+  lostSinglePakt();
+  closePakt();
+  resetPicsThisWeek();
+  resetPicToday();
+}, function () {
+  /* This function is executed when the job stops */
+  console.log('done with checking');
+},
+  true, /* Start the job right now */
+  'America/Los_Angeles' /* Time zone of this job. */
+);
 
+module.exports = job;
