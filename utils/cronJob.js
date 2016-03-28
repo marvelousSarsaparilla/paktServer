@@ -68,16 +68,16 @@ var job = new CronJob('00 01 00 * * *', function () {
    */
   lostRepeatingPakt()
   .then(function() {
-    lostSinglePakt()
+    return lostSinglePakt()
   })
   .then(function() {
-    closePakt()
+    return closePakt()
   })
   .then(function() {
-    resetPicsThisWeek()
+    return resetPicsThisWeek()
   })
   .then(function() {
-    resetPicToday()
+    return resetPicToday()
   })
   
 }, function () {
