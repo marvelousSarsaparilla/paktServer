@@ -87,14 +87,17 @@ module.exports = {
     });
   },
   checkIfPaktRepeating: function (paktId) {
-    return sequelize.query('SELECT repeating FROM pakts WHERE id = ?',
-      { replacements: [paktId], type: sequelize.QueryTypes.SELECT })
+    return sequelize.query(
+      'SELECT repeating FROM pakts WHERE id = ?',
+      { replacements: [paktId], type: sequelize.QueryTypes.SELECT }
+    )
     .then(function (pakt) {
       return pakt[0].repeating;
     });
   },
   winSingleEvent: function (userId, paktId) {
-    return sequelize.query('UPDATE pakt_users pu ' +
+    return sequelize.query(
+      'UPDATE pakt_users pu ' +
       'JOIN pakts p ' +
         'ON pu.PaktId = p.id ' +
       'SET pu.win = true ' +
@@ -106,7 +109,8 @@ module.exports = {
       { replacements: [paktId, userId], type: sequelize.QueryTypes.UPDATE });
   },
   winRepeatingEvent: function (userId, paktId) {
-    return sequelize.query('UPDATE pakt_users pu ' +
+    return sequelize.query(
+      'UPDATE pakt_users pu ' +
       'JOIN pakts p ' +
         'ON pu.PaktId = p.id ' +
       'SET pu.win = true ' +
