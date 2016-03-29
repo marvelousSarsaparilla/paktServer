@@ -67,19 +67,18 @@ var job = new CronJob('00 01 00 * * *', function () {
    * at 12:01:00 AM.
    */
   lostRepeatingPakt()
-  .then(function() {
-    return lostSinglePakt()
+  .then(function () {
+    return lostSinglePakt();
   })
-  .then(function() {
-    return closePakt()
+  .then(function () {
+    return closePakt();
   })
-  .then(function() {
-    return resetPicsThisWeek()
+  .then(function () {
+    return resetPicsThisWeek();
   })
-  .then(function() {
-    return resetPicToday()
-  })
-  
+  .then(function () {
+    return resetPicToday();
+  });
 }, function () {
   /* This function is executed when the job stops */
   console.log('done with checking');

@@ -10,7 +10,13 @@ module.exports = function (sequelize, DataTypes) {
     timeFrame: DataTypes.STRING,
     startDate: DataTypes.DATE,
     endDate: DataTypes.DATE,
-    settled: DataTypes.BOOLEAN,
-    open: DataTypes.BOOLEAN
+    settled: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
+    open: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true
+    }
   });
 };

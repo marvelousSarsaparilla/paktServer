@@ -6,7 +6,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     win: {
       type: DataTypes.BOOLEAN,
-      defaultValue: true
+      defaultValue: null
     },
     delete: {
       type: DataTypes.BOOLEAN,
