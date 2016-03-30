@@ -88,7 +88,7 @@ module.exports = {
   },
   checkIfPaktRepeating: function (paktId) {
     return sequelize.query(
-      'SELECT repeating FROM pakts WHERE id = ?',
+      'SELECT repeating FROM Pakts WHERE id = ?',
       { replacements: [paktId], type: sequelize.QueryTypes.SELECT }
     )
     .then(function (pakt) {
@@ -97,8 +97,8 @@ module.exports = {
   },
   winSingleEvent: function (userId, paktId) {
     return sequelize.query(
-      'UPDATE pakt_users pu ' +
-      'JOIN pakts p ' +
+      'UPDATE Pakt_Users pu ' +
+      'JOIN Pakts p ' +
         'ON pu.PaktId = p.id ' +
       'SET pu.win = true ' +
       'WHERE pu.PaktId = ? ' +
@@ -110,8 +110,8 @@ module.exports = {
   },
   winRepeatingEvent: function (userId, paktId) {
     return sequelize.query(
-      'UPDATE pakt_users pu ' +
-      'JOIN pakts p ' +
+      'UPDATE Pakt_Users pu ' +
+      'JOIN Pakts p ' +
         'ON pu.PaktId = p.id ' +
       'SET pu.win = true ' +
       'WHERE pu.PaktId = ? ' +
