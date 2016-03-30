@@ -4,8 +4,8 @@ var CronJob = require('cron').CronJob;
 // REPEATING EVENT; decide if lost
 var lostRepeatingPakt = function () {
   return sequelize.query(
-    'UPDATE pakt_users pu ' +
-    'JOIN pakts p ' +
+    'UPDATE Pakt_Users pu ' +
+    'JOIN Pakts p ' +
       'ON pu.PaktId = p.id ' +
     'SET pu.win = false ',
     'WHERE p.repeating = true ' +
@@ -17,8 +17,8 @@ var lostRepeatingPakt = function () {
 // decide if single day pakt is lost
 var lostSinglePakt = function () {
   return sequelize.query(
-    'UPDATE pakt_users pu ' +
-    'JOIN pakts p ' +
+    'UPDATE Pakt_Users pu ' +
+    'JOIN Pakts p ' +
       'ON pu.PaktId = p.id ' +
     'SET pu.win = false ' +
     'WHERE p.repeating = false ' +
@@ -30,8 +30,8 @@ var lostSinglePakt = function () {
 // close pakt on last day
 var closePakt = function () {
   return sequelize.query(
-    'UPDATE pakt_users pu ' +
-    'JOIN pakts p ' +
+    'UPDATE Pakt_u=Users pu ' +
+    'JOIN Pakts p ' +
       'ON pu.PaktId = p.id ' +
     'SET p.open = false ' +
     'WHERE p.open = true ' +
@@ -40,8 +40,8 @@ var closePakt = function () {
 // reset pic count on last day of week
 var resetPicsThisWeek = function () {
   return sequelize.query(
-    'UPDATE pakt_users pu ' +
-    'JOIN pakts p ' +
+    'UPDATE Pakt_Users pu ' +
+    'JOIN Pakts p ' +
       'ON pu.PaktId = p.id ' +
     'SET pu.picsThisWeek = 0 ' +
     'WHERE p.repeating = true ' +
@@ -53,8 +53,8 @@ var resetPicsThisWeek = function () {
 // reset pic upload at end of day
 var resetPicToday = function () {
   return sequelize.query(
-    'UPDATE pakt_users pu ' +
-    'JOIN pakts p ' +
+    'UPDATE Pakt_Users pu ' +
+    'JOIN Pakts p ' +
       'ON pu.PaktId = p.id ' +
     'SET pu.picToday = false ' +
     'WHERE p.repeating = true ' +
