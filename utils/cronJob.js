@@ -30,7 +30,7 @@ var lostSinglePakt = function () {
 // close pakt on last day
 var closePakt = function () {
   return sequelize.query(
-    'UPDATE Pakt_u=Users pu ' +
+    'UPDATE Pakt_Users pu ' +
     'JOIN Pakts p ' +
       'ON pu.PaktId = p.id ' +
     'SET p.open = false ' +
