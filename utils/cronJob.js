@@ -7,7 +7,7 @@ var lostRepeatingPakt = function () {
     'UPDATE Pakt_Users pu ' +
     'JOIN Pakts p ' +
       'ON pu.PaktId = p.id ' +
-    'SET pu.win = false ',
+    'SET pu.win = false ' +
     'WHERE p.repeating = true ' +
       'AND p.open = true ' +
       'AND pu.win is NULL ' +
