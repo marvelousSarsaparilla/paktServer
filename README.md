@@ -1,16 +1,17 @@
-# Marvelous Sarsaparilla
-
-Building some cool stuff (NBAS)
-
 ## Table of Contents
 
+1. [Pakt Client](#pakt-client)
 1. [Team](#team)
-2. [Development](#development)
+1. [Development](#development)
     1. [Installing Dependencies](#installing-dependencies)
-    2. [File Hierarchy](#hierarchy)
-3. [Contributing](#contributing)
-4. [Documentation](#Documentation)
-5. [Tests](#Tests)
+    1. [File Hierarchy](#file-hierarchy)
+1. [Contributing](#contributing)
+1. [Documentation](#documentation)
+1. [Tests](#tests)
+
+## Pakt Client
+
+You can find the corresponding Client [here](https://github.com/marvelousSarsaparilla/paktClient.git).
 
 ## Team
 
@@ -32,8 +33,8 @@ npm install
 ```js
 ROOT
  |__SERVER__
-    |- server.js
     |- mockData.js
+    |- server.js
     |
     |__CONTROLLERS__
     |   |- paktController.js
@@ -53,7 +54,6 @@ ROOT
     |   |- paktUserQueries.js
     |   |- pictureQueries.js
     |   |- userQueries.js
-    |   |- userUserQueries.js
     |
     |__SPEC__
     |   |- paktControllerSpec.js
@@ -61,9 +61,9 @@ ROOT
     |   |- userControllerSpec.js
     |
     |__UTILS__
+        |- cronJob.js
         |- db.js
         |- env.example.js
-        |- helpers.js
         |- middleware.js
         |- routes.js
         | ... etc ...
